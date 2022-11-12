@@ -7,27 +7,9 @@ import { Detail, UserService } from './user.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
 
-  title: string;
-  msg: any = [];
+  constructor() { }
 
-  constructor(private userservice: UserService) { }
-
-  ngOnInit() {
-    this.setTitle();
-    this.getUserList();
-  }
-
-  setTitle() {
-    this.title = this.userservice.title;
-  }
-
-  getUserList() {
-    this.userservice.getUserList().subscribe((data) => {
-      this.msg = data;
-      console.log(data)
-    });
-  }
 }
 
