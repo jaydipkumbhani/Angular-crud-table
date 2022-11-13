@@ -1,26 +1,35 @@
 <div class="mar-top-50">
-  <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
-    <div class="row justify-content-center">
-      <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-        <div class="mb-3">
-          <label for="name" class="form-label">Name</label>
-          <input
-            type="email"
-            class="form-control"
-            id="name"
-            aria-describedby="emailHelp"
-          />
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="email" class="form-control" id="name" formControlName="name" />
+                    <span *ngIf="nameControl && nameControl.touched && !nameControl.valid">Name is required</span>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" formControlName="email" />
+                    <span *ngIf="emailControl && emailControl.touched && emailControl.errors && emailControl.errors['required']">Email is required</span>
+                    <span *ngIf="emailControl && emailControl.touched && emailControl.errors && emailControl.errors['email']">Email is not valid</span>
+                </div>
+                <div class=" mb-3 ">
+                    <label for="phone " class="form-label">Phone</label>
+                    <input type="tel " class="form-control" id="phone" formControlName="phone" />
+                    <span *ngIf="phoneControl && phoneControl.touched && !phoneControl.valid">phone is required</span>
+                </div>
+                <div class="mb-3 ">
+                    <label for="address " class="form-label ">address</label>
+                    <input type="text " class="form-control " id="address" formControlName="address" />
+                    <span *ngIf="addressControl && addressControl.touched && !addressControl.valid">address is required</span>
+                </div>
+                <div class="mb-3 ">
+                    <label for="city" class="form-label">City</label>
+                    <input type="text" class="form-control" id="city" formControlName="city"/>
+                    <span *ngIf="cityControl && cityControl.touched && !cityControl.valid">city is required</span>
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid">Submit</button>
+            </div>
         </div>
-        <div class="mb-3">
-          <label for="email" class="form-label">Email</label>
-          <input type="password" class="form-control" id="email" />
-        </div>
-        <div class="mb-3">
-          <label for="phone" class="form-label">Phome</label>
-          <input type="password" class="form-control" id="phone" />
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </div>
-    </div>
-  </form>
+    </form>
 </div>

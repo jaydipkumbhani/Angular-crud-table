@@ -8,20 +8,40 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 })
 
 export class ManageUserComponent implements OnInit {
-  myForm: FormGroup;
+  userForm = this.fb.group({
+    name:['',Validators.required],
+    email:['',[Validators.email, Validators.required]],
+    phone:['',Validators.required],
+    address:['',Validators.required],
+    city:['',Validators.required],
+  })
 
-  ngOnInit() {
-    this.myForm = new FormGroup({
-      name: new FormControl('Sammy'),
-      email: new FormControl(''),
-      message: new FormControl('')
-    });
+  constructor(private fb:FormBuilder) { }
+
+  ngOnInit() { }
+  onSubmit(){
+    console.log(this.userForm.value);
+    console.log(this.userForm);
   }
 
-  onSubmit(form: FormGroup) {
-    console.log('Valid?', form.valid); // true or false
-    console.log('Name', form.value.name);
-    console.log('Email', form.value.email);
-    console.log('Message', form.value.message);
+  get nameControl(){
+    return this.userForm.get("name")
+  }
+
+  get emailControl(){
+    console.log(this.userForm.get("email"))
+    return this.userForm.get("email")
+  }
+
+  get addressControl(){
+    return this.userForm.get("address")
+  }
+
+  get phoneControl(){
+    return this.userForm.get('phone')
+  }
+
+  get cityControl(){
+    return this.userForm.get("city")
   }
 }
