@@ -1,21 +1,26 @@
-<form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
-    <div>
-        <label>
-        Name:
-        <input formControlName="name" placeholder="Your name">
-      </label>
+<div class="mar-top-50">
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+    <div class="row justify-content-center">
+      <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input
+            type="email"
+            class="form-control"
+            id="name"
+            aria-describedby="emailHelp"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="password" class="form-control" id="email" />
+        </div>
+        <div class="mb-3">
+          <label for="phone" class="form-label">Phome</label>
+          <input type="password" class="form-control" id="phone" />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
     </div>
-    <div>
-        <label>
-        Email:
-        <input formControlName="email" placeholder="Your email">
-      </label>
-    </div>
-    <div>
-        <label>
-        Phone:
-        <input formControlName="message" placeholder="Your message">
-      </label>
-    </div>
-    <button type="submit">Save</button>
-</form>
+  </form>
+</div>
