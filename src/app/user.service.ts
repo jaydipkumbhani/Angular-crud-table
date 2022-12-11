@@ -14,6 +14,7 @@ interface Address {
     zipcode: string;
     geo: Geo;
 }
+// Interface is a specification that identifies a related set of properties and methods to be implemented by a class. So basically using interface you can set some basic rules for your properties and methods using class.
 
 export interface Detail {
     id: number;
@@ -262,8 +263,42 @@ export class UserService {
 
     constructor(private http: HttpClient) { }
 
+    isAdminRights(): boolean {
+        return false;
+    }
+
     getUserList() {
         // return this.http.get<Detail[]>("https://jsonplaceholder.typicode.com/users");
         return of(this.data);
+    }
+
+    adduser(data: any) {
+        data['id'] = this.data.length + 1;
+        this.data.push(data);
+    }
+
+    editUser(updatedData: any, selectedUserId: number) {
+        const index = this.data.findIndex((v) => v.id == selectedUserId);
+        if (index > -1) {
+
+            this.data.splice(index, 1, updatedData);
+            console.log(this.data.splice(index, 1, updatedData));
+        }
+    }
+
+    getUserById(userId: string | number) {
+        return this.data.find((v) => v.id == userId);
+    }
+
+
+    deleteUser(index: number) {
+        this.data.splice(index, 1);
+    }
+
+    filterUserByText(text: string) {
+        if (text) {
+            return this.data.filter((v) => v.name.includes(text));
+        }
+        return;
     }
 }

@@ -1,35 +1,51 @@
 <div class="mar-top-50">
-    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-        <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="email" class="form-control" id="name" formControlName="name" />
-                    <span *ngIf="nameControl && nameControl.touched && !nameControl.valid">Name is required</span>
+    <div *ngIf="showForm">
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()" >
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-md-4 col-xs-12 col-sm-12">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="email" class="form-control" id="name" formControlName="name" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" formControlName="email" />
+                        <span *ngIf="emailControl && emailControl.touched && emailControl.errors && emailControl.errors['required']">Email is required</span>
+                        <span *ngIf="emailControl && emailControl.touched && emailControl.errors && emailControl.errors['email']">Email is not valid</span>
+                    </div>
+                    <div class=" mb-3 ">
+                        <label for="phone " class="form-label">Phone</label>
+                        <input type="tel " class="form-control" id="phone" formControlName="phone" />
+                        <span *ngIf="phoneControl && phoneControl.touched && !phoneControl.valid">phone is required</span>
+                    </div>
+                    <div class="mb-3 ">
+                        <label for="street " class="form-label ">street</label>
+                        <input type="text " class="form-control " id="street" formControlName="street" />
+                        <span *ngIf="streetControl && streetControl.touched && !streetControl.valid">address is required</span>
+                    </div>
+                    <div class="mb-3 ">
+                        <label for="city" class="form-label">City</label>
+                        <input type="text" class="form-control" id="city" formControlName="city"/>
+                        <span *ngIf="cityControl && cityControl.touched && !cityControl.valid">city is required</span>
+                    </div>
+                    <!-- [disabled]="!userForm.valid" -->
+                    <!-- "!selectedUerId" if we use routing set belowe -->
+                    <div *ngIf= "!showUpdateButton" >
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-success mx-2" [routerLink]="['/user-list']">Cancle</button>
+                    </div>
+                    <div *ngIf="showUpdateButton">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                        <button type="submit" class="btn btn-success mx-2" [routerLink]="['/user-list']">Back</button>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" formControlName="email" />
-                    <span *ngIf="emailControl && emailControl.touched && emailControl.errors && emailControl.errors['required']">Email is required</span>
-                    <span *ngIf="emailControl && emailControl.touched && emailControl.errors && emailControl.errors['email']">Email is not valid</span>
-                </div>
-                <div class=" mb-3 ">
-                    <label for="phone " class="form-label">Phone</label>
-                    <input type="tel " class="form-control" id="phone" formControlName="phone" />
-                    <span *ngIf="phoneControl && phoneControl.touched && !phoneControl.valid">phone is required</span>
-                </div>
-                <div class="mb-3 ">
-                    <label for="address " class="form-label ">address</label>
-                    <input type="text " class="form-control " id="address" formControlName="address" />
-                    <span *ngIf="addressControl && addressControl.touched && !addressControl.valid">address is required</span>
-                </div>
-                <div class="mb-3 ">
-                    <label for="city" class="form-label">City</label>
-                    <input type="text" class="form-control" id="city" formControlName="city"/>
-                    <span *ngIf="cityControl && cityControl.touched && !cityControl.valid">city is required</span>
-                </div>
-                <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid">Submit</button>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
+    <div role="alert" *ngIf="showErrorMessage">
+        <a [routerLink]="['/user-list']"> << Back</a>
+        <p class="alert alert-danger">
+            User does not found!
+        </p>
+    </div>
 </div>

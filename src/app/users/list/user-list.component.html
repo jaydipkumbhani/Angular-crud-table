@@ -1,34 +1,61 @@
 <h1 class="text-center">User List</h1>
 <div class="text-end">
-    <button class="btn btn-secondary" [routerLink]="['/add-user']">Add</button>
+    <form class="d-flex" role="search" [formGroup]="searchForm" (ngSubmit)="onSearch()">
+        <input class="form-control me-2" type="search" formControlName="search" placeholder="Search" aria-label="Search"
+            (keyup)="onSearch()">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+    <!-- <button class="btn btn-secondary" [routerLink]="['/add-user']">Add</button> normal routing-->
+    <!-- belowe is child routing -->
+    <!-- <button class="btn btn-secondary" [routerLink]="['./add-user']">Add</button> -->
+    <button class="btn btn-secondary" (click)="onAdd()">Add</button>
 </div>
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>No.</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>phone</th>
-            <th>Address</th>
-            <th>City</th>
-            <th>Edit</th>
-            <th>Delete</th>
-        </tr>
-    </thead>
-    <tbody *ngFor="let user of msg">
-        <tr>
-            <td>{{ user.id }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.phone }}</td>
-            <td>{{ user.address.street }}</td>
-            <td>{{ user.address.city }}</td>
-            <td>
-                <button class="btn btn-primary">Edit</button>
-            </td>
-            <td>
-                <button class="btn btn-danger">Delete</button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<div class="row">
+    <div class="col-lg-8">
+        <table class="table table-bordered" *ngIf="msg.length">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>phone</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let user of msg| paginate: { itemsPerPage:10, currentPage:p} let i = index;">
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.phone }}</td>
+                    <td>{{ user.address.street }}</td>
+                    <td>{{ user.address.city }}</td>
+                    <td>
+                        <!-- <button class="btn btn-primary" [routerLink]="['/edit-user',user.id]">Edit</button> -->
+                        <button class="btn btn-primary" (click)="onEdit(user)">Edit</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" (click)="onDelete(i)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <pagination-controls (pageChange)="p = $event" class="float-right"></pagination-controls>
+    </div>
+
+    <div class="col-lg-4">
+        <app-manage-user [userData]="selectedUser"></app-manage-user>
+    </div>
+
+    <div>
+        <router-outlet></router-outlet>
+    </div>
+</div>
+<div *ngIf="!msg.length">
+    <p class="alert alert-warning">
+        No user available!!
+    </p>
+</div>
